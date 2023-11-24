@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from rest_framework.response import Response
 from rest_framework import generics
 from django.contrib.auth import login
+import json
 
 from .serializers import LoginUserSerializer
 
@@ -10,6 +11,7 @@ class LoginView(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
 
     def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode('utf-8'))
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
