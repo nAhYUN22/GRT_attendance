@@ -4,6 +4,7 @@ from .models import SingleUser
 from django.contrib.auth import authenticate
 
 class UserSeriazlizer(serializers.Serializer):
+    
     class Meta:
         model   = SingleUser
         fields=['ID']

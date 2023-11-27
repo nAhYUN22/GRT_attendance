@@ -25,3 +25,11 @@ class Student(models.Model):
     class Meta:
         db_table = 'Student'
     
+class MeetingTime(models.Model):
+    student_id  = models.ObjectIdField()
+    date        = models.DateField()
+    start_time  = models.TimeField()
+    end_time    = models.TimeField()
+    
+    class Meta:
+        db_table = 'MeetingTime'

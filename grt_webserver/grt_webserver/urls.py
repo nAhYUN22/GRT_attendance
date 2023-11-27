@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from grt_app.views import index
+from grt_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
-    # path('grt/auth/login/'),
+    path('', views.index),
+    path('grt/auth/login/', views.LoginView.as_view(), name = 'logiun'),
 ]
