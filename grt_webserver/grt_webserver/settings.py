@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'ENFOCE_SCHEMA':False,
-        'NAME':'GRT',
+        'NAME':'Prototype',
         'CLIENT':{
             # 나중에 환경변수로 꼭 바꾸기
             'host':'mongodb+srv://limhs8630:NmpIB6E3wd1vN4b2@grt1.inkrppw.mongodb.net/'

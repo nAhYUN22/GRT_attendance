@@ -7,10 +7,26 @@ loginButton.addEventListener("click", (event) => {
     const username = loginForm.username.value;
     const password = loginForm.password.value;
 
-    if (username === "user" && password === "web_dev") {
-        alert("You have successfully logged in.");
-        location.reload();
-    } else {
-        loginErrorMsg.style.opacity = 1;
-    }
+    fetch('/grt/auth/login/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ID: username,
+            password: password
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert("You have successfully logged in.")
+            } else {
+                loginErrorMsg.textContent = "Error: Invalid login credentials";
+                loginErrorMsg.style.opacity = 1;
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 });

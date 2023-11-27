@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('grt/auth/login/', views.LoginView.as_view(), name = 'logiun'),
+    path('grt/insert/', views.AddStudentMeetingView.as_view(), name = 'insert'),
 ]

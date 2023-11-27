@@ -8,18 +8,23 @@ import json
 
 from .models import Student, MeetingTime
 
-from .serializers import LoginUserSerializer
+from .serializers import LoginUserSerializer, UserSeriazlizer
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode('utf-8'))
+        print(data)
         serializer = self.get_serializer(data=data)
+        if not serializer.is_valid():
+            print(serializer.errors)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        print(user)
         login(request, user)
-        return Response({"message": "User logged in successfully."})
+        print("login\n")
+        return Response(UserSeriazlizer(user).data.get('ID'))
 
 class AddStudentMeetingView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
