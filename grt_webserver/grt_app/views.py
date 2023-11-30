@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
 from rest_framework import generics
 from django.contrib.auth import login
 import json
@@ -17,14 +19,19 @@ class LoginView(generics.GenericAPIView):
         data = json.loads(request.body.decode('utf-8'))
         print(data)
         serializer = self.get_serializer(data=data)
-        if not serializer.is_valid():
-            print(serializer.errors)
+        # if not serializer.is_valid():
+        #     print(serializer.errors)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        token, created = Token.objects.get_or_create(user=user)
+        print(user.ID)
         print(user)
         login(request, user)
         print("login\n")
-        return Response(UserSeriazlizer(user).data.get('ID'))
+        return Response({
+                         'ID':user.ID,
+                         'token':token.key
+                         })
 
 class AddStudentMeetingView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
@@ -47,7 +54,6 @@ class AddStudentMeetingView(generics.GenericAPIView):
         
         return JsonResponse({'status':'success'})
 
-# Create your views here.
 def user_login(request):
     user_id=request.POST.get('id')
     password=request.POSt.get('password')
@@ -57,13 +63,7 @@ def user_login(request):
         return redirect('home')
     else:
         return render(request, 'login.html',{'error': 'Invalid ID or PW'})
-    return render(request,'login.html')
 
 
 def index(request):
     return render(request,'index.html')
-
-
-        
-    
-    
