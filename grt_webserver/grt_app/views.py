@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.views import APIView
+from rest_framework.views import APIView, View
 from rest_framework import generics
 from django.contrib.auth import login
 import json
@@ -32,6 +32,17 @@ class LoginView(generics.GenericAPIView):
                          'ID':user.ID,
                          'token':token.key
                          })
+        
+class CheckLoginView(generics.GenericAPIView):
+    def get(self,request, *args, **kwargs):
+        if request.user.is_authenticated:
+            print("login")
+            # 사용자가 로그인한 경우
+            return JsonResponse({'logged_in': True})
+        else:
+            print("no login")
+            # 사용자가 로그인하지 않은 경우
+            return JsonResponse({'logged_in': False})
 
 class AddStudentMeetingView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
@@ -54,16 +65,10 @@ class AddStudentMeetingView(generics.GenericAPIView):
         
         return JsonResponse({'status':'success'})
 
-def user_login(request):
-    user_id=request.POST.get('id')
-    password=request.POSt.get('password')
-    user=authenticate(request, username=user_id,password=password)
-    if user is not None:
-        login(request,user)
-        return redirect('home')
-    else:
-        return render(request, 'login.html',{'error': 'Invalid ID or PW'})
-
-
-def index(request):
-    return render(request,'index.html')
+class MainPageView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index.html')
+    
+class LoginPageView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'login.html')

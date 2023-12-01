@@ -5,42 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="{% static 'login-page.css' %}" />
-    <script defer src="{% static 'login-page.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/main-page.css' %}" />
+    <script defer src="{% static 'js/main-page.js' %}"></script>
   </head>
 
   <body>
-    <main id="main-holder">
-      <h1 id="login-header">Login</h1>
-      <img
-        src="{% static 'images/grt_logo.jpg' %}"
-        alt="guarantee"
-        style="width: 200px; height: 150px"
-      />
-      <div id="login-error-msg-holder">
-        <p id="login-error-msg">
-          Invalid username
-          <span id="error-msg-second-line">and/or password</span>
-        </p>
-      </div>
-
-      <form id="login-form">
-        <input
-          type="text"
-          name="username"
-          id="username-field"
-          class="login-form-field"
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          name="password"
-          id="password-field"
-          class="login-form-field"
-          placeholder="Password"
-        />
-        <input type="submit" value="Login" id="login-form-submit" />
-      </form>
+    <main>
+        <div class="container">
+            <h1>Welcome to the Main Page</h1>
+            <button class="button" id="loginButton">Login</button>
+            <button class="button" id="studentInfoButton">Enter Student Info</button>
+            <button class="button" id="attendanceCheckButton">Check Attendance</button>
+        </div>
     </main>
   </body>
 </html>

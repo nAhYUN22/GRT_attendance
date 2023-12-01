@@ -1,8 +1,8 @@
 const loginForm = document.getElementById("login-form");
-const loginButton = document.getElementById("login-form-submit");
+const submitButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
 
-loginButton.addEventListener("click", (event) => {
+submitButton.addEventListener("click", (event) => {
     event.preventDefault();
     const username = loginForm.username.value;
     const password = loginForm.password.value;
@@ -30,7 +30,10 @@ loginButton.addEventListener("click", (event) => {
             console.log(data);
             alert("You have successfully logged in. Token: " + data.token);
             // 필요한 경우, 토큰을 localStorage나 sessionStorage에 저장할 수 있습니다.
-            // 예: localStorage.setItem('token', data.token);
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('isLoggedIn', 'true');
+            console.log(localStorage.getItem('authToken'));
+            // fetch('/') // 메인 페이지 URL로 변경
         })
         .catch((error) => {
             console.error('Error:', error);
