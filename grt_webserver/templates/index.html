@@ -1,22 +1,21 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'css/main-page.css' %}" />
-    <script defer src="{% static 'js/main-page.js' %}"></script>
-  </head>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>학생 관리 시스템</title>
+</head>
+<body>
+    <h1>학생 관리 시스템 메인 페이지</h1>
+    <ul>
+        {% if user.is_authenticated %}
+        <li><a href="#" onclick="sendRequest('grt/logout');">로그아웃</a></li>
+        <li><a href="#" onclick="sendRequest('grt/student_info');">학생 정보 입력</a></li>
+        <li><a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a></li>
+        {% else %}
+        <li><a href="#" onclick="sendRequest('grt/login');">로그인</a></li>
+        {% endif %}
+    </ul>
 
-  <body>
-    <main>
-        <div class="container">
-            <h1>Welcome to the Main Page</h1>
-            <button class="button" id="loginButton">Login</button>
-            <button class="button" id="studentInfoButton">Enter Student Info</button>
-            <button class="button" id="attendanceCheckButton">Check Attendance</button>
-        </div>
-    </main>
-  </body>
+    <script src="../static/js/main.js"></script>
+</body>
 </html>

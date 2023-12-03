@@ -21,8 +21,9 @@ from grt_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.MainPageView.as_view(),name='mainpage'),
-    path('grt/login/',views.LoginPageView.as_view(), name='loginpage'),
+    path('grt/login/',views.LoginView.as_view(), name='loginpage'),
     path('grt/auth/login/', views.LoginView.as_view(), name = 'login'),
     path('grt/auth/check_login/', views.CheckLoginView.as_view(), name = 'check_login'),
+    path('grt/logout/',views.LoginView.as_view(), name='logout'),
     path('grt/insert/', views.AddStudentMeetingView.as_view(), name = 'insert'),
 ]

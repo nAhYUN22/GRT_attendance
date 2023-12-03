@@ -13,6 +13,9 @@ from .models import Student, MeetingTime
 from .serializers import LoginUserSerializer, UserSeriazlizer
 
 class LoginView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'login.html')
+    
     serializer_class = LoginUserSerializer
 
     def post(self, request, *args, **kwargs):
@@ -44,6 +47,10 @@ class CheckLoginView(generics.GenericAPIView):
             # 사용자가 로그인하지 않은 경우
             return JsonResponse({'logged_in': False})
 
+def logout(request):
+    logout(request)
+    return render('index.html')
+
 class AddStudentMeetingView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode('utf-8'))
@@ -68,7 +75,3 @@ class AddStudentMeetingView(generics.GenericAPIView):
 class MainPageView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
-    
-class LoginPageView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'login.html')

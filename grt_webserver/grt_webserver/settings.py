@@ -140,7 +140,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
 
+# 정적 파일을 수집할 디렉토리 설정 (배포 시에만 필요)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_COOKIE_HTTPONLY = True
