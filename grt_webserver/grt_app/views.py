@@ -1,11 +1,11 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, View
 from rest_framework import generics
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from django.contrib.auth import logout as auth_logout
 import json
 
 from .models import Student, MeetingTime
@@ -48,8 +48,8 @@ class CheckLoginView(generics.GenericAPIView):
             return JsonResponse({'logged_in': False})
 
 def logout(request):
-    logout(request)
-    return render('index.html')
+    auth_logout(request)
+    return render(request, 'index.html')
 
 class AddStudentMeetingView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
