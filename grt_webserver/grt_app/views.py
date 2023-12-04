@@ -12,6 +12,8 @@ from .models import Student, MeetingTime
 from .forms import StudentForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
 
+from django.views.generic.list import ListView
+
 class LoginView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         return render(request, 'login.html')
@@ -61,6 +63,19 @@ class AddStudentView(View):
     def get(self, request, *args, **kwargs):
         form = StudentForm()
         return render(request, 'addstudent.html', {'form': form})
+
+# ListView 활용
+class StudentListView(ListView):
+    model = Student
+    template_name = 'studentlist.html'
+    context_object_name = 'students'
+
+# # ListView 활용 X
+# class StudentListView(View):
+#     def get(self, request, *args, **kwargs):
+#         students = Student.objects.all()  # 모든 학생 데이터를 가져옵니다.
+#         return render(request, 'student_list.html', {'students': students})
+
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):

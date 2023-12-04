@@ -10,6 +10,7 @@
         {% if user.is_authenticated %}
         <li><a href="#" onclick="sendRequest('grt/auth/logout');">로그아웃</a></li>
         <li><a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a></li>
+        <li><a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a></li>
         <li><a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a></li>
         {% else %}
         <li><a href="#" onclick="sendRequest('grt/login');">로그인</a></li>

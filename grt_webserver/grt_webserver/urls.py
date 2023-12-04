@@ -26,4 +26,5 @@ urlpatterns = [
     path('grt/auth/check_login/', views.CheckLoginView.as_view(), name = 'check_login'),
     path('grt/auth/logout/',views.logout, name='logoutpage'),
     path('grt/addstudent/', views.AddStudentView.as_view(), name = 'addstudent'),
+    path('grt/students/', views.StudentListView.as_view(), name='studentlist'),
 ]
