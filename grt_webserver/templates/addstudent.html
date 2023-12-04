@@ -5,11 +5,14 @@
         <title>학생 정보 입력</title>
     </head>
     <body>
+        <a>
         <h1>Add Student</h1>
-        <form method="post">
+        <form method="post" action="{% url 'addstudent' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Submit</button>
         </form>
+
+        <a href="{% url 'mainpage' %}">Return to Main Page</a>
     </body>
 </html>

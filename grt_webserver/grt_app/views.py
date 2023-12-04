@@ -51,12 +51,12 @@ def logout(request):
     auth_logout(request)
     return render(request, 'index.html')
 
-class AddStudentMeetingView(generics.GenericAPIView):
+class AddStudentView(View):
     def post(self, request, *args, **kwargs):
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('some_view_name')
+            return redirect('addstudent')
     
     def get(self, request, *args, **kwargs):
         form = StudentForm()
