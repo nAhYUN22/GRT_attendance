@@ -40,15 +40,22 @@ class SingleUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Student(models.Model):
-    name        = models.CharField(max_length=100)
-    email       = models.CharField(max_length=100)
-    phone_num   = models.CharField(max_length=15)
+    name            = models.CharField(max_length=100)
+    zoom_id         = models.CharField(max_length=100)
+    phone_num       = models.CharField(max_length=15)
+    meeting_times   = models.ArrayModelField(
+        model_container='MeetingTime',
+        null=True,
+        blank=True
+    )
     
     class Meta:
         db_table = 'Student'
     
+    def __str__(self):
+        return self.name
+    
 class MeetingTime(models.Model):
-    student_id  = models.ObjectIdField()
     date        = models.DateField()
     start_time  = models.TimeField()
     end_time    = models.TimeField()

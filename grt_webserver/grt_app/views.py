@@ -9,7 +9,7 @@ from django.contrib.auth import logout as auth_logout
 import json
 
 from .models import Student, MeetingTime
-
+from .forms import StudentForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
 
 class LoginView(generics.GenericAPIView):
@@ -53,24 +53,14 @@ def logout(request):
 
 class AddStudentMeetingView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body.decode('utf-8'))
-        
-        student_data = data.get('student')
-        student, created=Student.objects.get_or_create(
-            name=student_data['name'],
-            zoom_id=student_data['zoom_id']
-        )
-        
-        meeting_time_data = data.get('meeting_times')
-        for mt_data in meeting_time_data:
-            MeetingTime.objects.create(
-                student=student,
-                date=mt_data['date'],
-                start_time=mt_data['start_time'],
-                end_time=mt_data['end_time']
-            )
-        
-        return JsonResponse({'status':'success'})
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('some_view_name')
+    
+    def get(self, request, *args, **kwargs):
+        form = StudentForm()
+        return render(request, 'addstudent.html', {'form': form})
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):

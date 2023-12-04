@@ -9,11 +9,11 @@
     <ul>
         {% if user.is_authenticated %}
         <li><a href="#" onclick="sendRequest('grt/auth/logout');">로그아웃</a></li>
+        <li><a href="#" onclick="sendRequest('grt/student_info');">학생 정보 입력</a></li>
+        <li><a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a></li>
         {% else %}
         <li><a href="#" onclick="sendRequest('grt/login');">로그인</a></li>
         {% endif %}
-        <li><a href="#" onclick="sendRequest('grt/student_info');">학생 정보 입력</a></li>
-        <li><a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a></li>
     </ul>
 
     <script src="../static/js/main.js"></script>
