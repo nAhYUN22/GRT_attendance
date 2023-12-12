@@ -9,7 +9,7 @@ from django.contrib.auth import logout as auth_logout
 import json
 
 from .models import Student, MeetingTime
-from .forms import StudentForm
+from .forms import StudentForm, StudentSearchForm, MeetingTimeForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
 
 from django.views.generic.list import ListView
@@ -53,22 +53,19 @@ def logout(request):
     auth_logout(request)
     return render(request, 'index.html')
 
-class AddStudentView(View):
-    def post(self, request, *args, **kwargs):
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('addstudent')
-    
-    def get(self, request, *args, **kwargs):
-        form = StudentForm()
-        return render(request, 'addstudent.html', {'form': form})
-
 # ListView 활용
-class StudentListView(ListView):
-    model = Student
-    template_name = 'studentlist.html'
-    context_object_name = 'students'
+class StudentListView(View):
+    def get(self, request, *args, **kwargs):
+        form = StudentSearchForm(request.GET or None)
+        if form.is_valid() and form.cleaned_data['name']:
+            students = Student.objects.filter(name__icontains=form.cleaned_data['name'])
+            for student in students:
+                print(student.id)
+        else:
+            students = Student.objects.all()
+            for student in students:
+                print(student)
+        return render(request, 'studentlist.html', {'form': form, 'students': students})
 
 # # ListView 활용 X
 # class StudentListView(View):
@@ -76,6 +73,45 @@ class StudentListView(ListView):
 #         students = Student.objects.all()  # 모든 학생 데이터를 가져옵니다.
 #         return render(request, 'student_list.html', {'students': students})
 
+
+class AddStudentView(View):    
+    def get(self, request, *args, **kwargs):
+        form = StudentForm()
+        return render(request, 'addstudent.html', {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            student=form.save(commit=False)
+            print(student.id)
+            student.save()
+            print(student)
+            return redirect('addstudent')
+
+    
+class AddMeetingView(View):
+    def get(self, request, *args, **kwargs):
+        student_zoom_id = request.GET.get('student_zoom_id')
+        student = Student.objects.get(zoom_id=student_zoom_id)
+        print(student.zoom_id)
+        form = MeetingTimeForm(initial={'zoom_id':student_zoom_id})
+        return render(request,'addmeeting.html',{'form':form,
+                                                 'student':student})
+    
+    def post(self, request, *args, **kwargs):
+        form = MeetingTimeForm(request.POST)
+        if form.is_valid():
+            meeting_time = form.save()
+            # print(meeting_time)
+            # student_zoom_id = request.POST.get('student_zoom_id')
+            # meeting_time.zoom_id = student_zoom_id  # MeetingTime 객체에 student 할당
+            # meeting_time.save()
+            print("success")
+            return redirect('studentlist')
+        else:
+            print(form.errors)
+            return render(request, 'studentlist.html', {'success':"No"})
+    
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):

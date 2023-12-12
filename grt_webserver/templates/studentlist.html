@@ -8,9 +8,17 @@
 </head>
 <body>
     <h1>학생 목록</h1>
+    <a href="{% url 'mainpage' %}">메인페이지</a>
+    <form method="get" action="{% url 'studentlist' %}">
+        {{ form.as_p }}
+        <button type="submit">검색</button>
+    </form>
+
     <ul>
         {% for student in students %}
-            <li>{{ student.name }} - {{ student.zoom_id }}</li>
+            <li>{{student.id}} - {{ student.name }} - {{ student.zoom_id }}
+                <a href="{% url 'addmeeting' %}?student_zoom_id={{student.zoom_id}}">자습 시간 입력</a>
+            </li>
             <!-- 추가적인 학생 정보를 여기에 표시할 수 있습니다. -->
         {% endfor %}
     </ul>
