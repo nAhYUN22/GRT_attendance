@@ -17,6 +17,7 @@
     <ul>
         {% for student in students %}
             <li>{{student.id}} - {{ student.name }} - {{ student.zoom_id }}
+                <a href="{% url 'meetinglist' %}?student_zoom_id={{student.zoom_id}}">자습 목록</a>
                 <a href="{% url 'addmeeting' %}?student_zoom_id={{student.zoom_id}}">자습 시간 입력</a>
             </li>
             <!-- 추가적인 학생 정보를 여기에 표시할 수 있습니다. -->

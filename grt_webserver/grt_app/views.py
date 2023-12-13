@@ -7,6 +7,8 @@ from rest_framework import generics
 from django.contrib.auth import login, authenticate
 from django.contrib.auth import logout as auth_logout
 import json
+import requests
+import os
 
 from .models import Student, MeetingTime
 from .forms import StudentForm, StudentSearchForm, MeetingTimeForm
@@ -53,7 +55,6 @@ def logout(request):
     auth_logout(request)
     return render(request, 'index.html')
 
-# ListView 활용
 class StudentListView(View):
     def get(self, request, *args, **kwargs):
         form = StudentSearchForm(request.GET or None)
@@ -67,11 +68,19 @@ class StudentListView(View):
                 print(student)
         return render(request, 'studentlist.html', {'form': form, 'students': students})
 
-# # ListView 활용 X
-# class StudentListView(View):
-#     def get(self, request, *args, **kwargs):
-#         students = Student.objects.all()  # 모든 학생 데이터를 가져옵니다.
-#         return render(request, 'student_list.html', {'students': students})
+class MeetingListView(View):
+    def get(self,request, *args, **kwargs):
+        student_zoom_id = request.GET.get('student_zoom_id')
+        student = Student.objects.get(zoom_id=student_zoom_id)
+        try:
+            meetings = MeetingTime.objects.filter(zoom_id=student_zoom_id)
+        except:
+            meetings = None
+        data={
+            'student':student,
+            'meetings':meetings
+        }
+        return render(request,'meetinglist.html',data)
 
 
 class AddStudentView(View):    
@@ -111,7 +120,73 @@ class AddMeetingView(View):
         else:
             print(form.errors)
             return render(request, 'studentlist.html', {'success':"No"})
-    
+        
+class CreateMeetingView(View):
+    def get(self,request,*args, **kwargs):
+        # replace with your client ID
+        client_id = os.environ.get('CLIENT_ID')
+
+        # replace with your account ID
+        account_id = os.environ.get('ACCOUNT_ID')
+
+        # replace with your client secret
+        client_secret = os.environ.get('CLIENT_SECRET')
+        print(client_id)
+        print(account_id)
+        print(client_id)
+
+        auth_token_url = "https://zoom.us/oauth/token"
+        api_base_url = "https://api.zoom.us/v2"
+        data={
+            "grant_type": "account_credentials",
+            "account_id": account_id,
+            "client_secret": client_secret
+        }
+        response = requests.post(auth_token_url,auth=(client_id,client_secret),data=data)
+
+        if response.status_code!=200:
+                print("Unable to get access token")
+        else:
+            print("Success")
+        response_data = response.json()
+        access_token = response_data["access_token"]
+
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+        start_date="2023-12-28"
+        start_time="17:43"
+        payload = {
+            "topic": "test",
+            "duration": "60",
+            'start_time': f'{start_date}T10:{start_time}',
+            "type": 2
+        }
+
+        resp = requests.post(f"{api_base_url}/users/me/meetings", 
+                             headers=headers, 
+                             json=payload)
+
+        if resp.status_code!=201:
+            print("Unable to generate meeting link")
+        response_data = resp.json()
+
+        content = {
+                        "meeting_url": response_data["join_url"], 
+                        "password": response_data["password"],
+                        "meetingTime": response_data["start_time"],
+                        "purpose": response_data["topic"],
+                        "duration": response_data["duration"],
+                        "message": "Success",
+                        "status":1
+        }
+        print(content)
+        return render(request,'index.html',{'status':"success"})
+        
+class CheckParticiapantsView(View):
+    def post():
+        return
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):
