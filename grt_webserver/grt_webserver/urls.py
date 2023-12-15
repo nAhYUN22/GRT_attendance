@@ -30,4 +30,5 @@ urlpatterns = [
     path('grt/addstudent/', views.AddStudentView.as_view(), name = 'addstudent'),
     path('grt/addmeeting/', views.AddMeetingView.as_view(), name='addmeeting'),
     path('grt/createmeeting/', views.CreateMeetingView.as_view(), name='createmeeting'),
+    path('grt/checkattendance/', views.CheckAttendanceView.as_view(), name='checkattendance'),
 ]

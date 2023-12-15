@@ -13,8 +13,7 @@ import os
 from .models import Student, MeetingTime
 from .forms import StudentForm, StudentSearchForm, MeetingTimeForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
-
-from django.views.generic.list import ListView
+from .services import ZoomServices
 
 class LoginView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
@@ -123,69 +122,17 @@ class AddMeetingView(View):
         
 class CreateMeetingView(View):
     def get(self,request,*args, **kwargs):
-        # replace with your client ID
-        client_id = os.environ.get('CLIENT_ID')
-
-        # replace with your account ID
-        account_id = os.environ.get('ACCOUNT_ID')
-
-        # replace with your client secret
-        client_secret = os.environ.get('CLIENT_SECRET')
-        print(client_id)
-        print(account_id)
-        print(client_id)
-
-        auth_token_url = "https://zoom.us/oauth/token"
-        api_base_url = "https://api.zoom.us/v2"
-        data={
-            "grant_type": "account_credentials",
-            "account_id": account_id,
-            "client_secret": client_secret
-        }
-        response = requests.post(auth_token_url,auth=(client_id,client_secret),data=data)
-
-        if response.status_code!=200:
-                print("Unable to get access token")
-        else:
-            print("Success")
-        response_data = response.json()
-        access_token = response_data["access_token"]
-
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json"
-        }
-        start_date="2023-12-28"
-        start_time="17:43"
-        payload = {
-            "topic": "test",
-            "duration": "60",
-            'start_time': f'{start_date}T10:{start_time}',
-            "type": 2
-        }
-
-        resp = requests.post(f"{api_base_url}/users/me/meetings", 
-                             headers=headers, 
-                             json=payload)
-
-        if resp.status_code!=201:
-            print("Unable to generate meeting link")
-        response_data = resp.json()
-
-        content = {
-                        "meeting_url": response_data["join_url"], 
-                        "password": response_data["password"],
-                        "meetingTime": response_data["start_time"],
-                        "purpose": response_data["topic"],
-                        "duration": response_data["duration"],
-                        "message": "Success",
-                        "status":1
-        }
-        print(content)
+        meeting=ZoomServices()
+        meeting.create_meeting()
         return render(request,'index.html',{'status':"success"})
         
-class CheckParticiapantsView(View):
-    def post():
+class CheckAttendanceView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'checkattendance.html')
+    def post(self, request, *args, **kwargs):
+        meeting_id=request.POST.get('meetingroom')
+        meeting=ZoomServices()
+        meeting.get_participants(meeting_id)
         return
 
 class MainPageView(View):
