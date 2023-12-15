@@ -73,5 +73,16 @@ class ZoomServices:
         }
         print(content)
     
-    def get_participants():
+    def get_participants(self,meetingId):
+        
+        params={}
+        resp = requests.post(f"{self.api_base_url}/metrics/meetings/{meetingId}/participants", 
+                             headers=self.headers)
+        if resp.status_code==200:
+            participants=resp.json().get("participants",[])
+            print(participants)
+            return {"participants":participants}
+        else:
+            print(resp.status_code)
+            return{"errorcode":resp.status_code}
         pass
