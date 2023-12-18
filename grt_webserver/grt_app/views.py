@@ -11,7 +11,7 @@ import requests
 import os
 
 from .models import Student, MeetingTime
-from .forms import StudentForm, StudentSearchForm, MeetingTimeForm
+from .forms import StudentForm, StudentSearchForm, MeetingTimeForm, MeetingRoomForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
 from .services import ZoomServices
 
@@ -128,12 +128,25 @@ class CreateMeetingView(View):
         
 class CheckAttendanceView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'checkattendance.html')
+        form = MeetingRoomForm(request.GET)
+        if form.is_valid() and form.cleaned_data['room']:
+            meeting_id=form.cleaned_data['room']
+            meeting=ZoomServices()
+            result=meeting.get_participants(meeting_id)
+            print(result)
+
+        return render(request, 'checkattendance.html',{'form': form})
     def post(self, request, *args, **kwargs):
         meeting_id=request.POST.get('meetingroom')
+        if meeting_id:
+            print(meeting_id)
         meeting=ZoomServices()
-        meeting.get_participants(meeting_id)
-        return
+        result=meeting.get_participants(meeting_id)
+        error=result.get('error')
+        if error:
+            return JsonResponse({"error":error},status=result.status_code)
+        else:
+            return JsonResponse(result)
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):

@@ -1,5 +1,6 @@
 import os
 import requests
+from django.http import JsonResponse
 
 # zoom
 class ZoomServices:
@@ -31,7 +32,8 @@ class ZoomServices:
             "client_secret": self.client_secret
         }
         response = requests.post(self.auth_token_url,auth=(self.client_id,self.client_secret),data=data)
-
+        data=response.json()
+        print(data)
         if response.status_code!=200:
                 print("Unable to get access token")
         else:
@@ -75,14 +77,20 @@ class ZoomServices:
     
     def get_participants(self,meetingId):
         
-        params={}
-        resp = requests.post(f"{self.api_base_url}/metrics/meetings/{meetingId}/participants", 
-                             headers=self.headers)
+        print("meetingID: "+meetingId)
+        params={"type":"live"}
+        print(self.headers)
+        resp = requests.get(f"{self.api_base_url}/metrics/meetings/{meetingId}/participants", 
+                             headers=self.headers,
+                             json=params)
+        response_data=resp.json()
+        print(response_data)
         if resp.status_code==200:
             participants=resp.json().get("participants",[])
             print(participants)
-            return {"participants":participants}
+            return JsonResponse({"participants":participants})
         else:
+            error_code=resp.status_code
+            print("Failed to get participants.")
             print(resp.status_code)
-            return{"errorcode":resp.status_code}
-        pass
+            return JsonResponse({"error":"Got error"},status=error_code)

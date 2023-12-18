@@ -1,29 +1,22 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>출석자 조히</title>
-    <link rel="stylesheet" href="{% static 'css/login-page.css' %}" />
-    
+    <title>출석자 조회</title>    
   </head>
 
   <body>
     <main id="main-holder">
-      <h1 id="login-header">출석자 조회</h1>
-      <img
-        src="{% static 'images/grt_logo.jpg' %}"
-        alt="guarantee"
-        style="width: 200px; height: 150px"
-      />
-
-    {% csrf_token %}
-    <input type="text" id="meeting_num" placeholder="meeting_num">
-    <input type="submit" value="Check" id="meeting_submit" >
+      <h1 id="meeting-header">출석자 조회</h1>
+      <form id="meeting_form" method="get" action="{% url 'checkattendance' %}">
+        {% comment %} {% csrf_token %} {% endcomment %}
+        {{ form.as_p }}
+        <button type="submit" id="meeting_submit">검색</button>
+      </form>
+    </main>
     <div id="participant-list">
     </div>
-    </main>
-    <script src="../static/js/checkattendance.js"></script>
+    {% comment %} <script src="../static/js/checkattendance.js"></script> {% endcomment %}
   </body>
 </html>

@@ -15,11 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from grt_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('grt_app/',include('grt_app.urls')),
     path('', views.MainPageView.as_view(),name='mainpage'),
     path('grt/login/',views.LoginView.as_view(), name='loginpage'),
     path('grt/auth/login/', views.LoginView.as_view(), name = 'login'),
