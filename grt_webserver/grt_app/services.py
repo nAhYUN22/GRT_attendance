@@ -32,8 +32,7 @@ class ZoomServices:
             "client_secret": self.client_secret
         }
         response = requests.post(self.auth_token_url,auth=(self.client_id,self.client_secret),data=data)
-        data=response.json()
-        print(data)
+        
         if response.status_code!=200:
                 print("Unable to get access token")
         else:
@@ -78,11 +77,9 @@ class ZoomServices:
     def get_participants(self,meetingId):
         
         print("meetingID: "+meetingId)
-        params={"type":"live"}
-        print(self.headers)
+        # params={"type":"live"}
         resp = requests.get(f"{self.api_base_url}/metrics/meetings/{meetingId}/participants", 
-                             headers=self.headers,
-                             json=params)
+                             headers=self.headers)
         response_data=resp.json()
         print(response_data)
         if resp.status_code==200:
