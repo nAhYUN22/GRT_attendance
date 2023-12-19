@@ -50,9 +50,10 @@ class CheckLoginView(generics.GenericAPIView):
             # 사용자가 로그인하지 않은 경우
             return JsonResponse({'logged_in': False})
 
-def logout(request):
-    auth_logout(request)
-    return render(request, 'index.html')
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        auth_logout(request)
+        return render(request, 'index.html')
 
 class StudentListView(View):
     def get(self, request, *args, **kwargs):
@@ -136,6 +137,7 @@ class CheckAttendanceView(View):
             print(result)
 
         return render(request, 'checkattendance.html',{'form': form})
+    
     def post(self, request, *args, **kwargs):
         meeting_id=request.POST.get('meetingroom')
         if meeting_id:
