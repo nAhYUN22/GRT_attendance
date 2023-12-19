@@ -17,7 +17,7 @@ class StudentSearchForm(forms.Form):
 class MeetingTimeForm(forms.ModelForm):
     class Meta:
         model = MeetingTime
-        fields = ['zoom_id', 'date', 'start_time']  # 필요한 필드를 여기에 추가합니다.
+        fields = ['zoom_id', 'date', 'start_time', 'end_time']  # 필요한 필드를 여기에 추가합니다.
         
 class MeetingRoomForm(forms.Form):
     room = forms.CharField(required=True, label='meeting_num')
