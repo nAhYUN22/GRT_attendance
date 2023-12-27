@@ -41,7 +41,7 @@ class SingleUser(AbstractBaseUser, PermissionsMixin):
 
 class Student(models.Model):
     name            = models.CharField(max_length=100)
-    zoom_id         = models.CharField(max_length=100)
+    email           = models.CharField(max_length=100)
     phone_num       = models.CharField(max_length=15, null=True, blank=True)
     
     class Meta:

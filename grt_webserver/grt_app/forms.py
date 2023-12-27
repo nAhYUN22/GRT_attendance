@@ -4,7 +4,7 @@ from .models import Student, MeetingTime
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['name', 'zoom_id', 'phone_num']
+        fields = ['name', 'email', 'phone_num']
 
 # class MeetingTimeForm(forms.ModelForm):
 #     class Meta:
