@@ -26,10 +26,12 @@ urlpatterns = [
     path('grt/auth/login/', views.LoginView.as_view(), name = 'login'),
     path('grt/auth/check_login/', views.CheckLoginView.as_view(), name = 'check_login'),
     path('grt/auth/logout/',views.LogoutView.as_view(), name='logoutpage'),
+    path('grt/auth/getoauth/',views.LogoutView.as_view(), name='logoutpage'),
     path('grt/students/', views.StudentListView.as_view(), name='studentlist'),
     path('grt/meetings/', views.MeetingListView.as_view(), name='meetinglist'),
     path('grt/addstudent/', views.AddStudentView.as_view(), name = 'addstudent'),
     path('grt/addmeeting/', views.AddMeetingView.as_view(), name='addmeeting'),
     path('grt/createmeeting/', views.CreateMeetingView.as_view(), name='createmeeting'),
     path('grt/checkattendance/', views.CheckAttendanceView.as_view(), name='checkattendance'),
+    path('grt/getparticipant/', views.GetParticipantView.as_view(), name='getparticipant'),
 ]

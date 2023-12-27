@@ -2,6 +2,53 @@ import os
 import requests
 from django.http import JsonResponse
 
+# Cisco Webex
+class WeebexServices:
+    def __init__(self):
+        self.access_token='NzQ3ZDFkZTctOTgyMC00ODU3LWI3YTEtZjNjMDRmMjg4NjJhMWEwZTY5YzctMjBk_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
+        self.api_base_url="https://webexapis.com/v1"
+        self.headers={
+            "Authorization": f"Bearer {self.access_token}",
+            "Content-Type": "application/json"
+        }
+    
+    def create_meeting(self):
+        start_time="2023-12-26T00:00"
+        end_time="2023-12-26T23:00"
+        
+    def get_meeting_id(self, meetingnum):
+        print("meetingNUM: "+meetingnum)
+        params={"meetingNumber":meetingnum}
+        resp=requests.get(f"{self.api_base_url}/meetings",
+                          headers=self.headers,params=params)
+        data=resp.json()
+        print(resp)
+        meetingIds=[item['id'] for item in data['items']]
+        meetingId=meetingIds[0]
+        
+        return meetingId
+        
+    
+    def get_participants(self,meetingId):
+        print("meetingID: "+str(meetingId))
+        params={"max":100,
+                "meetingId":meetingId}
+        resp = requests.get(f"{self.api_base_url}/meetingParticipants", 
+                             headers=self.headers,params=params)
+        data=resp.json()
+        
+        print(data)
+        if resp.status_code==200:
+            participants=[item['email'] for item in data['items']]
+            print("Participants: ")
+            print(participants)
+            return JsonResponse({"participants":participants})
+        else:
+            error_code=resp.status_code
+            print("Failed to get participants.")
+            print(resp.status_code)
+            return JsonResponse({"error":"Got error"},status=error_code)
+
 # zoom
 class ZoomServices:
     def __init__(self):
@@ -73,6 +120,23 @@ class ZoomServices:
             "status":1
         }
         print(content)
+        
+    def get_registrants(self,meetingId):
+        print("meetingID: "+meetingId)
+        # params={"type":"live"}
+        resp = requests.get(f"{self.api_base_url}/meetings/{meetingId}/registrants", 
+                             headers=self.headers)
+        response_data=resp.json()
+        print(response_data)
+        if resp.status_code==200:
+            participants=resp.json().get("participants",[])
+            print(participants)
+            return JsonResponse({"participants":participants})
+        else:
+            error_code=resp.status_code
+            print("Failed to get participants.")
+            print(resp.status_code)
+            return JsonResponse({"error":"Got error"},status=error_code)
     
     def get_participants(self,meetingId):
         

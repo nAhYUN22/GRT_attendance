@@ -13,7 +13,7 @@ import os
 from .models import Student, MeetingTime
 from .forms import StudentForm, StudentSearchForm, MeetingTimeForm, MeetingRoomForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
-from .services import ZoomServices
+from .services import ZoomServices, WeebexServices
 
 class LoginView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
@@ -131,9 +131,11 @@ class CheckAttendanceView(View):
     def get(self, request, *args, **kwargs):
         form = MeetingRoomForm(request.GET)
         if form.is_valid() and form.cleaned_data['room']:
-            meeting_id=form.cleaned_data['room']
-            meeting=ZoomServices()
-            result=meeting.get_participants(meeting_id)
+            meetingnum=form.cleaned_data['room']
+            # meeting=ZoomServices()
+            meeting=WeebexServices()
+            meetingId=meeting.get_meeting_id(meetingnum)
+            result=meeting.get_participants(meetingId)
             print(result)
 
         return render(request, 'checkattendance.html',{'form': form})
@@ -143,12 +145,18 @@ class CheckAttendanceView(View):
         if meeting_id:
             print(meeting_id)
         meeting=ZoomServices()
-        result=meeting.get_participants(meeting_id)
+        result=meeting.get_registrants(meeting_id)
         error=result.get('error')
         if error:
             return JsonResponse({"error":error},status=result.status_code)
         else:
             return JsonResponse(result)
+        
+class GetParticipantView(View):
+    def post(self,request,*args, **kwargs):
+        response=json.loads(request.body)
+        participant=response['participant']
+        print(participant)
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):
