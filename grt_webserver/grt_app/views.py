@@ -70,10 +70,11 @@ class StudentListView(View):
 
 class MeetingListView(View):
     def get(self,request, *args, **kwargs):
-        student_zoom_id = request.GET.get('student_zoom_id')
-        student = Student.objects.get(zoom_id=student_zoom_id)
+        student_email = request.GET.get('student_email')
+        print(student_email)
+        student = Student.objects.get(email=student_email)
         try:
-            meetings = MeetingTime.objects.filter(zoom_id=student_zoom_id)
+            meetings = MeetingTime.objects.filter(email=student_email)
         except:
             meetings = None
         data={
@@ -100,10 +101,10 @@ class AddStudentView(View):
     
 class AddMeetingView(View):
     def get(self, request, *args, **kwargs):
-        student_zoom_id = request.GET.get('student_zoom_id')
-        student = Student.objects.get(zoom_id=student_zoom_id)
-        print(student.zoom_id)
-        form = MeetingTimeForm(initial={'zoom_id':student_zoom_id})
+        student_email = request.GET.get('student_email')
+        student = Student.objects.get(email=student_email)
+        # print(student.email)
+        form = MeetingTimeForm(initial={'email':student_email})
         return render(request,'addmeeting.html',{'form':form,
                                                  'student':student})
     
@@ -112,8 +113,8 @@ class AddMeetingView(View):
         if form.is_valid():
             meeting_time = form.save()
             # print(meeting_time)
-            # student_zoom_id = request.POST.get('student_zoom_id')
-            # meeting_time.zoom_id = student_zoom_id  # MeetingTime 객체에 student 할당
+            # student_email = request.POST.get('student_email')
+            # meeting_time.zoom_id = student_email  # MeetingTime 객체에 student 할당
             # meeting_time.save()
             print("success")
             return redirect('studentlist')
