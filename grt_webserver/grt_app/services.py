@@ -1,9 +1,11 @@
 import os
 import requests
+import pytz
 from django.http import JsonResponse
+from datetime import datetime
 
 # Cisco Webex
-class WeebexServices:
+class WebexServices:
     def __init__(self):
         self.access_token='NzQ3ZDFkZTctOTgyMC00ODU3LWI3YTEtZjNjMDRmMjg4NjJhMWEwZTY5YzctMjBk_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
         self.api_base_url="https://webexapis.com/v1"
@@ -48,6 +50,25 @@ class WeebexServices:
             print("Failed to get participants.")
             print(resp.status_code)
             return JsonResponse({"error":"Got error"},status=error_code)
+        
+    def check_attendance(self, participants):
+        time_now=DatetimeServices.get_time()
+        
+        return participants
+
+class DatetimeServices:
+    def get_time():
+        # UTC 현재 시간
+        utc_now = datetime.utcnow()
+
+        # UTC 시간을 한국 시간대(KST, UTC+9)로 변환
+        kst_timezone = pytz.timezone('Asia/Seoul')
+        kst_now = utc_now.replace(tzinfo=pytz.utc).astimezone(kst_timezone)
+
+        print("UTC 시간:", utc_now)
+        print("한국 시간:", kst_now)
+    
+        return kst_now
 
 # zoom
 class ZoomServices:

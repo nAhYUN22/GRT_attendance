@@ -13,7 +13,7 @@ import os
 from .models import Student, MeetingTime
 from .forms import StudentForm, StudentSearchForm, MeetingTimeForm, MeetingRoomForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
-from .services import ZoomServices, WeebexServices
+from .services import ZoomServices, WebexServices, DatetimeServices
 
 class LoginView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
@@ -133,10 +133,9 @@ class CheckAttendanceView(View):
         if form.is_valid() and form.cleaned_data['room']:
             meetingnum=form.cleaned_data['room']
             # meeting=ZoomServices()
-            meeting=WeebexServices()
+            meeting=WebexServices()
             meetingId=meeting.get_meeting_id(meetingnum)
-            result=meeting.get_participants(meetingId)
-            print(result)
+            participants=meeting.get_participants(meetingId)
 
         return render(request, 'checkattendance.html',{'form': form})
     
@@ -157,6 +156,12 @@ class GetParticipantView(View):
         response=json.loads(request.body)
         participant=response['participant']
         print(participant)
+        
+class GetTimeView(View):
+    def get(self, request, *args, **kwargs):
+        time_now=DatetimeServices.get_time()
+        print(time_now)
+        return JsonResponse({"time":time_now})
 
 class MainPageView(View):
     def get(self, request, *args, **kwargs):

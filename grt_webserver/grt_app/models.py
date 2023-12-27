@@ -49,7 +49,7 @@ class Student(models.Model):
     
 
 class MeetingTime(models.Model):
-    zoom_id     = models.CharField(max_length=100)
+    email       = models.CharField(max_length=100)
     date        = models.CharField(max_length=100)
     start_time  = models.CharField(max_length=100)
     end_time    = models.CharField(max_length=100)
