@@ -137,11 +137,21 @@ class CheckAttendanceView(View):
             meeting=WebexServices()
             meetingId=meeting.get_meeting_id(meetingnum)
             participants=meeting.get_participants(meetingId)
-            registrants=AttendanceServices.get_registrants()
+            time=AttendanceServices()
+            registrants=time.get_registrants()
             print(registrants)
             # meeting.check_attendance(participants=participants)
+            absent=[p for p in registrants if p not in participants]
+            print(absent)
+            
+            # 부재중인 참가자들의 이름 가져오기
+            absent_students = list(Student.objects.filter(email__in=absent))
+            # .values_list('name', flat=True)
+            # absent_names = list(absent_students)
+            # print(absent_names)
 
-        return render(request, 'checkattendance.html',{'form': form})
+        return render(request, 'checkattendance.html',{'form': form,
+                                                       'absents':absent_students})
     
     def post(self, request, *args, **kwargs):
         meeting_id=request.POST.get('meetingroom')

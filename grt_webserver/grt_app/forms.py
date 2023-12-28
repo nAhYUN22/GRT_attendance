@@ -21,3 +21,9 @@ class MeetingTimeForm(forms.ModelForm):
         
 class MeetingRoomForm(forms.Form):
     room = forms.CharField(required=True, label='meeting_num')
+    
+    def clean_room(self):
+        data=self.cleaned_data['room']
+        room_num=data.replace(" ","")
+        return room_num
+        

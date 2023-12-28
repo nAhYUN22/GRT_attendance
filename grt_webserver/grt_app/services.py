@@ -84,7 +84,7 @@ class AttendanceServices:
             end_time__gte=self.current_hour
             )
         registrants=list(register_meetings.values_list('email',flat=True))
-        print(registrants)
+        # print(registrants)
         return registrants
     
         
