@@ -3,11 +3,12 @@ import requests
 import pytz
 from django.http import JsonResponse
 from datetime import datetime
+from .models import MeetingTime
 
 # Cisco Webex
 class WebexServices:
     def __init__(self):
-        self.access_token='NzQ3ZDFkZTctOTgyMC00ODU3LWI3YTEtZjNjMDRmMjg4NjJhMWEwZTY5YzctMjBk_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
+        self.access_token='Mzk2MjM2NGYtNTY0Yi00ODc4LWE1YmItM2Y5NDBlNjk3N2RiYjE5ZjNjOWEtNGFl_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
         self.api_base_url="https://webexapis.com/v1"
         self.headers={
             "Authorization": f"Bearer {self.access_token}",
@@ -52,12 +53,18 @@ class WebexServices:
             return JsonResponse({"error":"Got error"},status=error_code)
         
     def check_attendance(self, participants):
-        time_now=DatetimeServices.get_time()
+        time_now=AttendanceServices.get_time()
         
         return participants
 
-class DatetimeServices:
-    def get_time():
+        
+class AttendanceServices:
+    def __init__(self):
+        self.current_time=self.get_time()
+        self.current_hour=self.current_time.strftime("%H:%M")
+        self.current_date=self.current_time.strftime("%m/%d")
+    
+    def get_time(self):
         # UTC 현재 시간
         utc_now = datetime.utcnow()
 
@@ -65,10 +72,22 @@ class DatetimeServices:
         kst_timezone = pytz.timezone('Asia/Seoul')
         kst_now = utc_now.replace(tzinfo=pytz.utc).astimezone(kst_timezone)
 
-        print("UTC 시간:", utc_now)
-        print("한국 시간:", kst_now)
+        # print("UTC 시간:", utc_now)
+        # print("한국 시간:", kst_now)
     
         return kst_now
+    
+    def get_registrants(self):
+        register_meetings=MeetingTime.objects.filter(
+            date=self.current_date,
+            start_time__lte=self.current_hour,
+            end_time__gte=self.current_hour
+            )
+        registrants=list(register_meetings.values_list('email',flat=True))
+        print(registrants)
+        return registrants
+    
+        
 
 # zoom
 class ZoomServices:
