@@ -150,9 +150,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_COOKIE_HTTPONLY = True
 
-ENV_FILE = os.path.join(BASE_DIR,'grtconfig.env')
+# ENV_FILE = os.path.join(BASE_DIR,'grtconfig.env')
 
-with open(ENV_FILE) as f:
-    for line in f:
-        key, value = line.strip().split('=')
-        os.environ[key] = value
+# with open(ENV_FILE) as f:
+#     for line in f:
+#         key, value = line.strip().split('=')
+#         os.environ[key] = value

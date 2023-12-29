@@ -13,7 +13,7 @@ import os
 from .models import Student, MeetingTime
 from .forms import StudentForm, StudentSearchForm, MeetingTimeForm, MeetingRoomForm
 from .serializers import LoginUserSerializer, UserSeriazlizer
-from .services import ZoomServices, WebexServices, AttendanceServices
+from .services import WebexServices, AttendanceServices
 
 class LoginView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
@@ -122,11 +122,11 @@ class AddMeetingView(View):
             print(form.errors)
             return render(request, 'studentlist.html', {'success':"No"})
         
-class CreateMeetingView(View):
-    def get(self,request,*args, **kwargs):
-        meeting=ZoomServices()
-        meeting.create_meeting()
-        return render(request,'index.html',{'status':"success"})
+# class CreateMeetingView(View):
+#     def get(self,request,*args, **kwargs):
+#         meeting=ZoomServices()
+#         meeting.create_meeting()
+#         return render(request,'index.html',{'status':"success"})
         
 class CheckAttendanceView(View):
     def get(self, request, *args, **kwargs):
@@ -152,18 +152,6 @@ class CheckAttendanceView(View):
 
         return render(request, 'checkattendance.html',{'form': form,
                                                        'absents':absent_students})
-    
-    def post(self, request, *args, **kwargs):
-        meeting_id=request.POST.get('meetingroom')
-        if meeting_id:
-            print(meeting_id)
-        meeting=ZoomServices()
-        result=meeting.get_registrants(meeting_id)
-        error=result.get('error')
-        if error:
-            return JsonResponse({"error":error},status=result.status_code)
-        else:
-            return JsonResponse(result)
         
 class GetParticipantView(View):
     def post(self,request,*args, **kwargs):
