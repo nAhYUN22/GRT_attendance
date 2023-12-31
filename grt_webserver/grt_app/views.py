@@ -137,6 +137,9 @@ class CheckAttendanceView(View):
             meeting=WebexServices()
             meetingId=meeting.get_meeting_id(meetingnum)
             participants=meeting.get_participants(meetingId)
+            # response=meeting.get_participants(meetingId)
+            # participants=response.get("participants",[])
+            print(participants)
             time=AttendanceServices()
             registrants=time.get_registrants()
             print(registrants)
@@ -149,9 +152,10 @@ class CheckAttendanceView(View):
             # .values_list('name', flat=True)
             # absent_names = list(absent_students)
             # print(absent_names)
-
-        return render(request, 'checkattendance.html',{'form': form,
+            return render(request, 'checkattendance.html',{'form': form,
                                                        'absents':absent_students})
+        return render(request, 'checkattendance.html',{'form': form})
+        
         
 class GetParticipantView(View):
     def post(self,request,*args, **kwargs):

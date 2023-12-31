@@ -8,7 +8,7 @@ from .models import MeetingTime
 # Cisco Webex
 class WebexServices:
     def __init__(self):
-        self.access_token='Mzk2MjM2NGYtNTY0Yi00ODc4LWE1YmItM2Y5NDBlNjk3N2RiYjE5ZjNjOWEtNGFl_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
+        self.access_token='MjIzYmExYTItY2Q0MS00OTkyLTgxMTEtNGUwMzZmM2Q2ZTI3NDFkYTA2M2MtZDMw_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
         self.api_base_url="https://webexapis.com/v1"
         self.headers={
             "Authorization": f"Bearer {self.access_token}",
@@ -43,9 +43,11 @@ class WebexServices:
         print(data)
         if resp.status_code==200:
             participants=[item['email'] for item in data['items']]
-            print("Participants: ")
+            print(type(participants))
+            print("Service:")
             print(participants)
-            return JsonResponse({"participants":participants})
+            return participants
+            # return JsonResponse({"participants":participants})
         else:
             error_code=resp.status_code
             print("Failed to get participants.")
