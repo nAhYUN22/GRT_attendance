@@ -23,17 +23,14 @@ class LoginView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
         serializer = self.get_serializer(data=data)
         # if not serializer.is_valid():
         #     print(serializer.errors)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
         token, created = Token.objects.get_or_create(user=user)
-        print(user.ID)
-        print(user)
         login(request, user)
-        print("login\n")
+        # print("login\n")
         return Response({
                          'ID':user.ID,
                          'token':token.key
