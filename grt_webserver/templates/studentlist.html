@@ -1,4 +1,4 @@
-<!-- student_list.html -->
+<!-- student_list.html
 
 <!DOCTYPE html>
 <html>
@@ -20,8 +20,44 @@
                 <a href="{% url 'meetinglist' %}?student_email={{student.email}}">자습 목록</a>
                 <a href="{% url 'addmeeting' %}?student_email={{student.email}}">자습 시간 입력</a>
             </li>
-            <!-- 추가적인 학생 정보를 여기에 표시할 수 있습니다. -->
+             #추가적인 학생 정보를 여기에 표시할 수 있습니다. 
         {% endfor %}
     </ul>
 </body>
+</html> -->
+
+<!-- student_list.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>학생 목록</title>
+    <link rel="stylesheet" href="/static/css/studentlist.css" />
+  </head>
+  <body>
+    <h1>학생 목록</h1>
+
+    <form method="get" action="{% url 'studentlist' %}">
+      {{ form.as_p }}
+      <button type="submit" class="submit">검색</button>
+    </form>
+    <button class="main_page" type="button">
+      <a href="{% url 'mainpage' %}" class="font_color">메인페이지</a>
+    </button>
+    <ul>
+      {% for student in students %}
+      <li>
+        {{student.id}} - {{ student.name }} - {{ student.email }}
+        <a href="{% url 'meetinglist' %}?student_email={{student.email}}"
+          >자습 목록</a
+        >
+        <a href="{% url 'addmeeting' %}?student_email={{student.email}}"
+          >자습 시간 입력</a
+        >
+      </li>
+      <!-- 추가적인 학생 정보를 여기에 표시할 수 있습니다. -->
+      {% endfor %}
+    </ul>
+  </body>
 </html>

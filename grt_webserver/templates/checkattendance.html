@@ -1,9 +1,9 @@
-{% load static %}
+<!-- {% load static %}
 <html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>출석자 조회</title>    
+    <title>출석자 조회</title>
   </head>
 
   <body>
@@ -11,16 +11,52 @@
       <h1 id="meeting-header">출석자 조회</h1>
       <a href="{% url 'mainpage' %}">메인페이지</a>
       <form id="meeting_form" method="get" action="{% url 'checkattendance' %}">
-        {% comment %} {% csrf_token %} {% endcomment %}
-        {{ form.as_p }}
+        {% comment %} {% csrf_token %} {% endcomment %} {{ form.as_p }}
         <button type="submit" id="meeting_submit">검색</button>
       </form>
     </main>
     <div id="participant-list">
       {% for absent in absents %}
-        <li>{{ absent.name }} - {{ absent.email }} - {{ absent.phone_num }}
-      {% endfor%}
+      <li>
+        {{ absent.name }} - {{ absent.email }} - {{ absent.phone_num }} {%
+        endfor%}
+      </li>
     </div>
-    {% comment %} <script src="../static/js/checkattendance.js"></script> {% endcomment %}
+
+    {% comment %}
+    <script src="../static/js/checkattendance.js"></script>
+    {% endcomment %}
+  </body>
+</html> -->
+
+{% load static %}
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/checkattendance.css" />
+    <title>출석자 조회</title>
+  </head>
+
+  <body>
+    <main id="main-holder">
+      <h1 id="meeting-header">출석자 조회</h1>
+      <a href="{% url 'mainpage' %}">메인페이지</a>
+      <form id="meeting_form" method="get" action="{% url 'checkattendance' %}">
+        {% comment %} {% csrf_token %} {% endcomment %} {{ form.as_p }}
+        <button type="submit" id="meeting_submit">검색</button>
+      </form>
+    </main>
+    <div id="participant-list">
+      {% for absent in absents %}
+      <li>
+        {{ absent.name }} - {{ absent.email }} - {{ absent.phone_num }} {%
+        endfor%}
+      </li>
+    </div>
+
+    {% comment %}
+    <script src="../static/js/checkattendance.js"></script>
+    {% endcomment %}
   </body>
 </html>

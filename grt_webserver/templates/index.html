@@ -1,25 +1,88 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>학생 관리 시스템</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>학생 관리 시스템 메인 페이지</h1>
     <ul>
-        {% if user.is_authenticated %}
-        <li><a href="#" onclick="sendRequest('grt/auth/logout');">로그아웃</a></li>
-        <li><a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a></li>
-        <li><a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a></li>
-        <li><a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a></li>
-        {% comment %} <li><a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a></li> {% endcomment %}
-        <li><a href="#" onclick="sendRequest('grt/checkattendance');">참가자 조회</a></li>
-        <li><a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a></li>
-        {% else %}
-        <li><a href="#" onclick="sendRequest('grt/login');">로그인</a></li>
-        {% endif %}
+      {% if user.is_authenticated %}
+      <li>
+        <a href="#" onclick="sendRequest('grt/auth/logout');">로그아웃</a>
+      </li>
+      <li>
+        <a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a>
+      </li>
+      <li>
+        <a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a>
+      </li>
+      <li>
+        <a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a>
+      </li>
+      {% comment %}
+      <li>
+        <a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a>
+      </li>
+      {% endcomment %}
+      <li>
+        <a href="#" onclick="sendRequest('grt/checkattendance');"
+          >참가자 조회</a
+        >
+      </li>
+      <li><a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a></li>
+      {% else %}
+      <li><a href="#" onclick="sendRequest('grt/login');">로그인</a></li>
+      {% endif %}
     </ul>
 
     <script src="../static/js/main.js"></script>
-</body>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>학생 관리 시스템</title>
+    <link rel="stylesheet" href="/static/css/index.css" />
+  </head>
+  <body>
+    <h1>학생 관리 시스템 메인 페이지</h1>
+
+    {% if user.is_authenticated %}
+    <button class="logout" type="button">
+      <a href="#" onclick="sendRequest('grt/auth/logout');" class="logout_font"
+        >로그아웃</a
+      >
+    </button>
+
+    <button class="student_info" type="button">
+      <a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a>
+    </button>
+    <button class="student_list" type="button">
+      <a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a>
+    </button>
+    <button class="student_attend" type="button">
+      <a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a>
+    </button>
+    {% comment %}
+    <li>
+      <a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a>
+    </li>
+    {% endcomment %}
+    <button class="student_check" type="button">
+      <a href="#" onclick="sendRequest('grt/checkattendance');">참가자 조회</a>
+    </button>
+    <button class="now_time" type="button">
+      <a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a>
+    </button>
+    {% else %}
+    <button class="login" type="button">
+      <a href="#" onclick="sendRequest('grt/login');">로그인</a>
+    </button>
+    {% endif %}
+
+    <script src="../static/js/main.js"></script>
+  </body>
 </html>
