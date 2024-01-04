@@ -1,4 +1,11 @@
-.main_page1 {
+h1 {
+  width: 100%;
+  height: 100px;
+  background: #205e44;
+  color: white;
+}
+
+.main_page {
   position: relative;
   border: none;
   display: inline-block;

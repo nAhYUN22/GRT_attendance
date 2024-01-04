@@ -63,9 +63,11 @@
     <button class="student_list" type="button">
       <a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a>
     </button>
-    <button class="student_attend" type="button">
-      <a href="#" onclick="sendRequest('grt/attendance');">학생 출결 확인</a>
-    </button>
+    <!-- <button class="student_attend" type="button">
+      <a href="#" onclick="sendRequest('grt/checkattendance');"
+        >학생 출결 확인</a
+      >
+    </button> -->
     {% comment %}
     <li>
       <a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a>
@@ -74,9 +76,9 @@
     <button class="student_check" type="button">
       <a href="#" onclick="sendRequest('grt/checkattendance');">참가자 조회</a>
     </button>
-    <button class="now_time" type="button">
+    <!-- <button class="now_time" type="button">
       <a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a>
-    </button>
+    </button> -->
     {% else %}
     <button class="login" type="button">
       <a href="#" onclick="sendRequest('grt/login');">로그인</a>
