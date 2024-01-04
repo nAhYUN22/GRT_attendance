@@ -1,5 +1,11 @@
+# virtualenv
 grt_venv/
+
+#env variable
 grtconfig.env
 secrets.json
+
+# python
 *.pyc
 *.pyo
+__pycache++/
