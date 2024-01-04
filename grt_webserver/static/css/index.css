@@ -4,6 +4,11 @@ h1 {
   background: #205e44;
   color: white;
   display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
+  color: white;
+  margin: 0.5rem;
+  padding: 0;
 }
 
 button {
