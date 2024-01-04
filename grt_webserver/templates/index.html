@@ -48,15 +48,19 @@
     <link rel="stylesheet" href="/static/css/index.css" />
   </head>
   <body>
-    <h1>학생 관리 시스템 메인 페이지</h1>
+    <header>
+      <h1>학생 관리 시스템 메인 페이지</h1>
 
-    {% if user.is_authenticated %}
-    <button class="logout" type="button">
-      <a href="#" onclick="sendRequest('grt/auth/logout');" class="logout_font"
-        >로그아웃</a
-      >
-    </button>
-
+      {% if user.is_authenticated %}
+      <nav>
+        <a
+          href="#"
+          onclick="sendRequest('grt/auth/logout');"
+          class="logout_font"
+          >로그아웃</a
+        >
+      </nav>
+    </header>
     <button class="student_info" type="button">
       <a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a>
     </button>
