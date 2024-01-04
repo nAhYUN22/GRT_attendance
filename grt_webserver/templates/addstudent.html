@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>학생 정보 입력</title>
+        <link rel="stylesheet" href="/static/css/addstudent.css" />
     </head>
     <body>
         <a>
@@ -10,9 +11,10 @@
         <form method="post" action="{% url 'addstudent' %}">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Submit</button>
+            <button class="submit" type="submit">Submit</button>
         </form>
-
-        <a href="{% url 'mainpage' %}">메인페이지</a>
+        <button class="main_page" type="button">
+            <a href="{% url 'mainpage' %}" class="font_color">메인페이지</a>
+        </button>
     </body>
 </html>
