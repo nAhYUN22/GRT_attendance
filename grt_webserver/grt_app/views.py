@@ -160,6 +160,11 @@ class GetParticipantView(View):
         participant=response['participant']
         print(participant)
         
+class RequestPermissionView(View):
+    def get(self,request,*args, **kwargs):
+        oauth_url=WebexServices().get_oauth_url()
+        redirect(oauth_url)
+        
 class TestView(View):
     def get(self, request, *args, **kwargs):
         time=AttendanceServices()

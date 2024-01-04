@@ -8,12 +8,19 @@ from .models import MeetingTime
 # Cisco Webex
 class WebexServices:
     def __init__(self):
-        self.access_token='MjIzYmExYTItY2Q0MS00OTkyLTgxMTEtNGUwMzZmM2Q2ZTI3NDFkYTA2M2MtZDMw_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
-        self.api_base_url="https://webexapis.com/v1"
-        self.headers={
+        self.client_id      ='C0c76a9d575a654a541fd7750ba43c03c9a6884ad1dea9827ebae97d61c6fbc00'
+        self.client_secret  ='c93e714f47b597a08c7542ae65cd6b86fb44c9e63ba4746a61d9a3d994e8de78'
+        self.redirect_uri   ='https://limhyeongseok.pythonanywhere.com/'
+        self.oauth_url      ='https://webexapis.com/v1/authorize?client_id=C0c76a9d575a654a541fd7750ba43c03c9a6884ad1dea9827ebae97d61c6fbc00&response_type=code&redirect_uri=https%3A%2F%2Flimhyeongseok.pythonanywhere.com%2F&scope=spark%3Akms%20meeting%3Aschedules_read%20meeting%3Aparticipants_read%20meeting%3Acontrols_read%20meeting%3Aadmin_participants_read%20meeting%3Aparticipants_write%20meeting%3Aschedules_write&state=abcd1234'
+        self.access_token   ='MjIzYmExYTItY2Q0MS00OTkyLTgxMTEtNGUwMzZmM2Q2ZTI3NDFkYTA2M2MtZDMw_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
+        self.api_base_url   ="https://webexapis.com/v1"
+        self.headers        ={
             "Authorization": f"Bearer {self.access_token}",
             "Content-Type": "application/json"
         }
+    
+    def get_oauth_url(self):
+        return self.oauth_url        
     
     def create_meeting(self):
         start_time="2023-12-26T00:00"
