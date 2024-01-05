@@ -35,4 +35,6 @@ urlpatterns = [
     path('grt/checkattendance/', views.CheckAttendanceView.as_view(), name='checkattendance'),
     path('grt/getparticipant/', views.GetParticipantView.as_view(), name='getparticipant'),
     path('grt/gettest/', views.TestView.as_view(), name='gettest'),
+    path('grt/requestpermission/', views.RequestPermissionView.as_view(), name='requestpermission'),
+    path('grt/oauth/', views.OauthView.as_view(), name='oauth'),
 ]
