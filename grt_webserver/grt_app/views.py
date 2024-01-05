@@ -163,7 +163,8 @@ class GetParticipantView(View):
 class RequestPermissionView(View):
     def get(self,request,*args, **kwargs):
         oauth_url=WebexServices().get_oauth_url()
-        return HttpResponseRedirect(oauth_url)
+        return redirect(oauth_url)
+        # return HttpResponseRedirect(oauth_url)
 
 class OauthView(View):
     def get(self,request, *args,**kwargs):
