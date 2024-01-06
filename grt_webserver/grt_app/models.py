@@ -49,10 +49,17 @@ class Student(models.Model):
     
 
 class MeetingTime(models.Model):
-    email       = models.CharField(max_length=100)
-    date        = models.CharField(max_length=100)
-    start_time  = models.CharField(max_length=100)
-    end_time    = models.CharField(max_length=100)
+    email           = models.CharField(max_length=100)
+    date            = models.CharField(max_length=100)
+    start_time      = models.CharField(max_length=100)
+    end_time        = models.CharField(max_length=100)
     
     class Meta:
         db_table = 'MeetingTime'
+
+class AccessToken(models.Model):
+    access_token    = models.CharField(max_length=200)
+    expire_time     = models.DateTimeField()
+
+    class Meta:
+        db_table = 'AccessToken'

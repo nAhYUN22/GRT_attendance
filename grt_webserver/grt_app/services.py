@@ -1,26 +1,67 @@
 import os
 import requests
 import pytz
+import datetime
 from django.http import JsonResponse
-from datetime import datetime
-from .models import MeetingTime
+from .models import MeetingTime, AccessToken
+from urllib.parse import urlencode
 
 # Cisco Webex
 class WebexServices:
     def __init__(self):
         self.client_id      ='C0c76a9d575a654a541fd7750ba43c03c9a6884ad1dea9827ebae97d61c6fbc00'
         self.client_secret  ='c93e714f47b597a08c7542ae65cd6b86fb44c9e63ba4746a61d9a3d994e8de78'
-        self.redirect_uri   ='https://limhyeongseok.pythonanywhere.com/'
-        self.oauth_url      ='https://webexapis.com/v1/authorize?client_id=C0c76a9d575a654a541fd7750ba43c03c9a6884ad1dea9827ebae97d61c6fbc00&response_type=code&redirect_uri=https%3A%2F%2Flimhyeongseok.pythonanywhere.com%2F&scope=spark%3Akms%20meeting%3Aschedules_read%20meeting%3Aparticipants_read%20meeting%3Acontrols_read%20meeting%3Aadmin_participants_read%20meeting%3Aparticipants_write%20meeting%3Aschedules_write&state=abcd1234'
+        self.redirect_base_uri   ='https://limhyeongseok.pythonanywhere.com/'
+        self.permission_url      ='https://webexapis.com/v1/authorize?'
         self.access_token   ='MjIzYmExYTItY2Q0MS00OTkyLTgxMTEtNGUwMzZmM2Q2ZTI3NDFkYTA2M2MtZDMw_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
         self.api_base_url   ="https://webexapis.com/v1"
         self.headers        ={
             "Authorization": f"Bearer {self.access_token}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
     
     def get_oauth_url(self):
-        return self.oauth_url        
+        params={
+            "response_type":"code",
+            "client_id":self.client_id,
+            "redirect_uri":f"{self.redirect_base_uri}/grt/oauth/",
+            "scope":'spark:kms meeting:schedules_read meeting:participants_read meeting:controls_read meeting:admin_participants_read meeting:participants_write meeting:schedules_write',
+            'state': 'abcd1234',
+        }
+        oauth_url=self.permission_url+urlencode(params)
+        print(oauth_url)
+        return oauth_url
+    
+    def store_access_token(self,code):
+        headers={
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        params={
+            "grant_type":"authorization_code",
+            "client_id":self.client_id,
+            "client_secret":self.client_secret,
+            "code":code,
+            "redirect_uri":f"{self.redirect_base_uri}/grt/oauth/",
+        }
+        resp=requests.post(f"{self.api_base_url}/access_token",
+                           headers=headers,params=params)
+        data=resp.json()
+        access_token = data.get("access_token")
+        expires_in = data.get("expires_in")
+        refresh_token = data.get("refresh_token")
+        refresh_token_expires_in = data.get("refresh_token_expires_in")
+        current_time = datetime.datetime.now()
+        expire_time = current_time + datetime.timedelta(seconds=expires_in)
+        refresh_expire_time = current_time + datetime.timedelta(seconds=refresh_token_expires_in)
+
+        token_obj=AccessToken(
+            access_token=access_token,
+            expire_time=expire_time
+        )
+        print(access_token)
+        token_obj.save()
+
+        return access_token
     
     def create_meeting(self):
         start_time="2023-12-26T00:00"

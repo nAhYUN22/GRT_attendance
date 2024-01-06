@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView, View
@@ -163,7 +163,13 @@ class GetParticipantView(View):
 class RequestPermissionView(View):
     def get(self,request,*args, **kwargs):
         oauth_url=WebexServices().get_oauth_url()
-        redirect(oauth_url)
+        return redirect(oauth_url)
+        # return HttpResponseRedirect(oauth_url)
+        
+class OauthView(View):
+    def get(self,request, *args,**kwargs):
+        state=request.GET.get('state')
+        code=request.GET.get('code')
         
 class TestView(View):
     def get(self, request, *args, **kwargs):
