@@ -165,7 +165,7 @@ class RequestPermissionView(View):
         oauth_url=WebexServices().get_oauth_url()
         return redirect(oauth_url)
         # return HttpResponseRedirect(oauth_url)
-
+        
 class OauthView(View):
     def get(self,request, *args,**kwargs):
         state=request.GET.get('state')
