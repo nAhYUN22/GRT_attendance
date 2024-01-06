@@ -61,55 +61,8 @@
         >
       </nav>
     </header>
-    <div id="box">
-      <button class="student_info" type="button">
-        <a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a>
-      </button>
-      <button class="student_list" type="button">
-        <a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a>
-      </button>
-      <!-- <button class="student_attend" type="button">
-      <a href="#" onclick="sendRequest('grt/checkattendance');"
-        >학생 출결 확인</a
-      >
-    </button> -->
-<<<<<<< HEAD
-      {% comment %}
-      <li>
-        <a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a>
-      </li>
-      {% endcomment %}
-      <button class="student_check" type="button">
-        <a href="#" onclick="sendRequest('grt/checkattendance');"
-          >참가자 조회</a
-        >
-      </button>
-    </div>
-    <!-- <button class="now_time" type="button">
-      <a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a>
-    </button> -->
-=======
-    {% comment %}
-    <li>
-      <a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a>
-    </li>
-    {% endcomment %}
-    <button class="student_check" type="button">
-      <a href="#" onclick="sendRequest('grt/checkattendance');">참가자 조회</a>
-    </button>
-    <button class="now_time" type="button">
-      <a href="#" onclick="sendRequest('grt/requestpermission');">현재 시간</a>
-    </button>
->>>>>>> 242853f542ae5025d5f35d4b879cd3391ab597c9
-    {% else %}
-    <button class="login" type="button">
-      <a href="#" onclick="sendRequest('grt/login');">로그인</a>
-    </button>
-    {% endif %}
 
-    <script src="../static/js/main.js"></script>
-
-    <!-- <span id="clock" style="color: black">clock</span>
+    <span id="clock" style="color: black">clock</span>
 
     <script>
       var Target = document.getElementById("clock");
@@ -133,6 +86,42 @@
       }
       clock();
       setInterval(clock, 1000); // 1초마다 실행
-    </script> -->
+    </script>
+
+    <div class="box">
+      <button class="student_info" type="button">
+        <a href="#" onclick="sendRequest('grt/addstudent');">학생 정보 입력</a>
+      </button>
+      <button class="student_list" type="button">
+        <a href="#" onclick="sendRequest('grt/students');">학생 목록 확인</a>
+      </button>
+      <!-- <button class="student_attend" type="button">
+      <a href="#" onclick="sendRequest('grt/checkattendance');"
+        >학생 출결 확인</a
+      >
+    </button> -->
+      {% comment %}
+      <li>
+        <a href="#" onclick="sendRequest('grt/createmeeting');">미팅룸 생성</a>
+      </li>
+      {% endcomment %}
+      <button class="student_check" type="button">
+        <a href="#" onclick="sendRequest('grt/checkattendance');"
+          >참가자 조회</a
+        >
+      </button>
+    </div>
+    <!-- <button class="now_time" type="button">
+      <a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a>
+    </button> -->
+    {% else %}
+    <button class="login" type="button">
+      <a href="#" onclick="sendRequest('grt/login'); "
+        ><font size="1">로그인</font></a
+      >
+    </button>
+    {% endif %}
+
+    <script src="../static/js/main.js"></script>
   </body>
 </html>
