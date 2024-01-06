@@ -14,12 +14,16 @@ class WebexServices:
         self.client_secret  ='3fda2b03d420fb02d14c155a5f8d1044f34381fb9c0a8ce77ad7fd254b7fa329'
         self.redirect_base_uri   ='https://limhyeongseok.pythonanywhere.com/'
         self.permission_url      ='https://webexapis.com/v1/authorize?'
-        self.access_token   ='MjIzYmExYTItY2Q0MS00OTkyLTgxMTEtNGUwMzZmM2Q2ZTI3NDFkYTA2M2MtZDMw_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
+        self.access_token   =self.get_access_token()
         self.api_base_url   ="https://webexapis.com/v1"
         self.headers        ={
             "Authorization": f"Bearer {self.access_token}",
             "Content-Type": "application/json",
         }
+        
+    def get_access_token(self):
+        access_token=AccessToken.objects.latest('access_token')
+        return access_token
 
     def get_permission_url(self):
         params={
