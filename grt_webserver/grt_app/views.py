@@ -57,8 +57,8 @@ class StudentListView(View):
         form = StudentSearchForm(request.GET or None)
         if form.is_valid() and form.cleaned_data['name']:
             students = Student.objects.filter(name__icontains=form.cleaned_data['name'])
-            for student in students:
-                print(student.id)
+            # for student in students:
+            #     print(student.id)
         else:
             students = Student.objects.all()
             for student in students:
@@ -170,8 +170,8 @@ class OauthView(View):
     def get(self,request, *args,**kwargs):
         state=request.GET.get('state')
         code=request.GET.get('code')
-        if state == 'abcd123':
-            access_token=WebexServices().save_access_token(self,code=code)
+        if state == 'abcd1234':
+            WebexServices().save_access_token(code)
         return render(request,'index.html')
         
 class TestView(View):
