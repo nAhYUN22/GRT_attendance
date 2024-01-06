@@ -57,8 +57,8 @@ class StudentListView(View):
         form = StudentSearchForm(request.GET or None)
         if form.is_valid() and form.cleaned_data['name']:
             students = Student.objects.filter(name__icontains=form.cleaned_data['name'])
-            for student in students:
-                print(student.id)
+            # for student in students:
+            #     print(student.id)
         else:
             students = Student.objects.all()
             for student in students:
@@ -162,7 +162,7 @@ class GetParticipantView(View):
         
 class RequestPermissionView(View):
     def get(self,request,*args, **kwargs):
-        oauth_url=WebexServices().get_oauth_url()
+        oauth_url=WebexServices().get_permission_url()
         return redirect(oauth_url)
         # return HttpResponseRedirect(oauth_url)
         
@@ -170,6 +170,9 @@ class OauthView(View):
     def get(self,request, *args,**kwargs):
         state=request.GET.get('state')
         code=request.GET.get('code')
+        if state == 'abcd1234':
+            WebexServices().save_access_token(code)
+        return render(request,'index.html')
         
 class TestView(View):
     def get(self, request, *args, **kwargs):
