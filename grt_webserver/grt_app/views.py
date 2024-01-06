@@ -162,7 +162,7 @@ class GetParticipantView(View):
         
 class RequestPermissionView(View):
     def get(self,request,*args, **kwargs):
-        oauth_url=WebexServices().get_oauth_url()
+        oauth_url=WebexServices().get_permission_url()
         return redirect(oauth_url)
         # return HttpResponseRedirect(oauth_url)
         
@@ -170,6 +170,9 @@ class OauthView(View):
     def get(self,request, *args,**kwargs):
         state=request.GET.get('state')
         code=request.GET.get('code')
+        if state == 'abcd123':
+            access_token=WebexServices().save_access_token(self,code=code)
+        return render(request,'index.html')
         
 class TestView(View):
     def get(self, request, *args, **kwargs):

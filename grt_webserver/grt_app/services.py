@@ -3,14 +3,14 @@ import requests
 import pytz
 import datetime
 from django.http import JsonResponse
-from .models import MeetingTime, AccessToken
+from .models import MeetingTime, AccessToken, RefreshToken
 from urllib.parse import urlencode
 
 # Cisco Webex
 class WebexServices:
     def __init__(self):
         self.client_id      ='C0c76a9d575a654a541fd7750ba43c03c9a6884ad1dea9827ebae97d61c6fbc00'
-        self.client_secret  ='c93e714f47b597a08c7542ae65cd6b86fb44c9e63ba4746a61d9a3d994e8de78'
+        self.client_secret  ='cd77d12bf55a8376ce3357f6dbe59ce09f5001f6b6d8c332a784c917c3df3122'
         self.redirect_base_uri   ='https://limhyeongseok.pythonanywhere.com/'
         self.permission_url      ='https://webexapis.com/v1/authorize?'
         self.access_token   ='MjIzYmExYTItY2Q0MS00OTkyLTgxMTEtNGUwMzZmM2Q2ZTI3NDFkYTA2M2MtZDMw_P0A1_0615a9a8-3f8a-4d33-aff0-1af12656603c'
@@ -20,7 +20,7 @@ class WebexServices:
             "Content-Type": "application/json",
         }
     
-    def get_oauth_url(self):
+    def get_permission_url(self):
         params={
             "response_type":"code",
             "client_id":self.client_id,
@@ -32,7 +32,7 @@ class WebexServices:
         print(oauth_url)
         return oauth_url
     
-    def store_access_token(self,code):
+    def save_access_token(self,code):
         headers={
             "Content-Type": "application/x-www-form-urlencoded"
         }
@@ -59,6 +59,12 @@ class WebexServices:
             expire_time=expire_time
         )
         print(access_token)
+        token_obj.save()
+        
+        token_obj=RefreshToken(
+            refresh_token=refresh_token,
+            refresh_expire_time=refresh_expire_time
+        )
         token_obj.save()
 
         return access_token
