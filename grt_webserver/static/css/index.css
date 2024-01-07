@@ -11,8 +11,7 @@ h1 {
 
 .logo {
   display: inline-block;
-  width: auto;
-  height: 10px;
+  margin-left: 20px;
 }
 
 #log_out {
@@ -28,6 +27,7 @@ h1 {
   background: teal;
   height: 5%;
   width: 8%;
+  margin-right: 20px;
 }
 
 header {
@@ -79,11 +79,12 @@ button {
   width: 30%;
   box-sizing: border-box;
   flex: 1;
-  height: 220px;
+  height: 150px;
 }
 
 a {
   color: aliceblue;
+  font-size: 20pt;
 }
 
 .student_check {
@@ -169,6 +170,9 @@ a {
   font-size: small;
 }
 
+#login-font {
+  font-size: small;
+}
 .box {
   width: 90%;
   margin: 10px auto;
@@ -189,4 +193,10 @@ a {
   background: teal;
   height: 5%;
   width: 8%;
+  margin-right: 20px;
+}
+
+#clock {
+  background-color: #205e44;
+  margin: 0px;
 }

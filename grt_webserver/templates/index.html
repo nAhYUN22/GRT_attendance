@@ -55,7 +55,7 @@
         alt="guarantee"
         style="width: 100px"
       />
-      <h1>학생 관리 시스템 메인 페이지</h1>
+      <h1 style="margin-top: 30px">학생 관리 시스템 메인 페이지</h1>
 
       {% if user.is_authenticated %}
       <nav id="log_out">
@@ -68,7 +68,7 @@
       </nav>
     </header>
 
-    <span id="clock" style="color: black">clock</span>
+    <h2 id="clock" style="color: white; background: #205e44">clock</h2>
 
     <script>
       var Target = document.getElementById("clock");
@@ -123,8 +123,8 @@
     {% else %}
     <nav id="log_in">
       <!-- <button class="login" type="button"> -->
-      <a href="#" onclick="sendRequest('grt/login'); "
-        ><font size="1">로그인</font></a
+      <a href="#" onclick="sendRequest('grt/login'); " id="login-font"
+        >로그인</a
       >
       <!-- </button> -->
     </nav>
