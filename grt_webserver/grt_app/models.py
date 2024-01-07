@@ -63,3 +63,10 @@ class AccessToken(models.Model):
 
     class Meta:
         db_table = 'AccessToken'
+        
+class RefreshToken(models.Model):
+    refresh_token       = models.CharField(max_length=200)
+    refresh_expire_time =models.DateTimeField()
+    
+    class Meta:
+        db_table = 'RefreshToken'
