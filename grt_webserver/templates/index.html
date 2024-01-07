@@ -49,10 +49,16 @@
   </head>
   <body>
     <header>
+      <img
+        class="logo"
+        src="/static/images/guarantee_logo.jpg"
+        alt="guarantee"
+        style="width: 100px"
+      />
       <h1>학생 관리 시스템 메인 페이지</h1>
 
       {% if user.is_authenticated %}
-      <nav>
+      <nav id="log_out">
         <a
           href="#"
           onclick="sendRequest('grt/auth/logout');"
@@ -115,11 +121,13 @@
       <a href="#" onclick="sendRequest('grt/gettest');">현재 시간</a>
     </button> -->
     {% else %}
-    <button class="login" type="button">
+    <nav id="log_in">
+      <!-- <button class="login" type="button"> -->
       <a href="#" onclick="sendRequest('grt/login'); "
         ><font size="1">로그인</font></a
       >
-    </button>
+      <!-- </button> -->
+    </nav>
     {% endif %}
 
     <script src="../static/js/main.js"></script>

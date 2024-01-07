@@ -9,7 +9,13 @@ h1 {
   padding: 0px;
 }
 
-nav {
+.logo {
+  display: inline-block;
+  width: auto;
+  height: 10px;
+}
+
+#log_out {
   display: inline-block;
   /* vertical-align: middle; */
   display: block;
@@ -29,7 +35,7 @@ header {
   justify-content: space-between;
   align-items: center;
   background: #205e44;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 button {
@@ -61,7 +67,7 @@ button {
   position: relative;
   border: none;
   display: inline-block;
-  padding: 10px 40px;
+  padding: 10px 20px;
   border-radius: 15px;
   font-family: "paybooc-Light", sans-serif;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
@@ -73,7 +79,7 @@ button {
   width: 30%;
   box-sizing: border-box;
   flex: 1;
-  height: 400px;
+  height: 220px;
 }
 
 a {
@@ -111,6 +117,9 @@ a {
   transition: 0.25s;
   background-color: #205e44;
   color: #1e6b7b;
+  flex: 1;
+  width: 30%;
+  box-sizing: border-box;
 }
 
 .student_list {
@@ -126,6 +135,7 @@ a {
   transition: 0.25s;
   background-color: #205e44;
   color: #1e6b7b;
+  flex: 1;
 }
 /* 
 .now_time {
@@ -164,4 +174,19 @@ a {
   margin: 10px auto;
   display: flex;
   height: 100%;
+}
+
+#log_in {
+  display: inline-block;
+  /* vertical-align: middle; */
+  display: block;
+  text-align: center;
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  background: teal;
+  height: 5%;
+  width: 8%;
 }
