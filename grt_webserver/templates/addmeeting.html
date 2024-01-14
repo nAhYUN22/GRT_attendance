@@ -2,19 +2,22 @@
 
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>미팅 시간 추가</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{student.name}}의 미팅 시간 추가</h1>
 
     <a href="{% url 'mainpage' %}">메인페이지</a>
 
     <form method="post" action="{% url 'addmeeting' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="hidden" name="student_zoom_id" value="{{ student.zoom_id }}">
-        <button type="submit">미팅 시간 추가</button>
+      {% csrf_token %} {{ form.as_p }}
+      <input
+        type="hidden"
+        name="student_zoom_id"
+        value="{{ student.zoom_id }}"
+      />
+      <button type="submit">미팅 시간 추가</button>
     </form>
-</body>
+  </body>
 </html>
